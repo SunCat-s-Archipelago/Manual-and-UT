@@ -3,8 +3,6 @@ import typing
 if typing.TYPE_CHECKING:
     from kvui import GameManager
 
-from worlds.tracker.TrackerClient import TrackerGameContext
-
 import asyncio
 import logging
 import traceback
@@ -173,28 +171,26 @@ class TrackerGameContext(CommonContext):
 
         HintLog.refresh_hints = update_available_hints
 
-    def run_gui(self):
-        from kvui import GameManager
-
-        class TrackerManager(GameManager):
-            logging_pairs = [
-                ("Client", "Archipelago")
-            ]
-            base_title = "Archipelago Tracker Client"
-
-            def build(self):
-                container = super().build()
-                self.tabs.do_default_tab = True
-                self.tabs.current_tab.height = 40
-                self.tabs.tab_height = 40
-                self.ctx.build_gui(self)
-
-                return container
-
-        self.ui = TrackerManager(self)
-        self.load_kv()
-        self.ui_task = asyncio.create_task(self.ui.async_run(), name="UI")
-        return self
+#    def run_gui(self):
+#        class TrackerManager(UI):
+#            logging_pairs = [
+#                ("Client", "Archipelago")
+#            ]
+#            base_title = "Archipelago Tracker Client"
+#
+#            def build(self):
+#                container = super().build()
+#                self.tabs.do_default_tab = True
+#                self.tabs.current_tab.height = 40
+#                self.tabs.tab_height = 40
+#                self.ctx.build_gui(self)
+#
+#                return container
+#
+#        self.ui = TrackerManager(self)
+#        self.load_kv()
+#        self.ui_task = asyncio.create_task(self.ui.async_run(), name="UI")
+#        return self
 
     def load_kv(self):
         from kivy.lang import Builder
